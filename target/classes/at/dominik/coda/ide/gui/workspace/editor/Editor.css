@@ -1,0 +1,11 @@
+.styled-text-area {
+    -fx-background-color: whitesmoke;
+}
+
+.paragraph-box > .paragraph-text {
+    -fx-background-color: whitesmoke;
+}
+
+.lineno {
+ 	-fx-background-color: #eeeeee;
+}

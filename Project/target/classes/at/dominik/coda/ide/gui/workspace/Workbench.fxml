@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.TextFlow?>
+
+<BorderPane id="ground" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@Workbench.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <SplitPane style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
+         <items>
+            <SplitPane dividerPositions="0.7" orientation="VERTICAL" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;">
+               <items>
+                  <SplitPane dividerPositions="0.25" style="-fx-background-color: transparent;">
+                     <items>
+                        <TreeView id="package-explorer" prefHeight="200.0" prefWidth="200.0" />
+                        <TextArea id="workbench" prefHeight="200.0" prefWidth="200.0" />
+                     </items>
+                  </SplitPane>
+                  <TextFlow id="terminal" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;" />
+               </items>
+            </SplitPane>
+         </items>
+      </SplitPane>
+   </center>
+   <left>
+      <VBox id="sidebar" alignment="TOP_CENTER" prefWidth="50.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" text="Button">
+               <graphic>
+                  <ImageView fitHeight="35.0" fitWidth="35.0">
+                     <image>
+                        <Image url="@../assets/create.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button contentDisplay="GRAPHIC_ONLY" layoutX="10.0" layoutY="15.0" mnemonicParsing="false" text="Button">
+               <graphic>
+                  <ImageView fitHeight="35.0" fitWidth="35.0">
+                     <image>
+                        <Image url="@../assets/save.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button contentDisplay="GRAPHIC_ONLY" layoutX="10.0" layoutY="60.0" mnemonicParsing="false" text="Button">
+               <graphic>
+                  <ImageView fitHeight="35.0" fitWidth="35.0">
+                     <image>
+                        <Image url="@../assets/settings.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <padding>
+            <Insets bottom="10.0" top="5.0" />
+         </padding>
+      </VBox>
+   </left>
+</BorderPane>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.TextFlow?>
+
+<BorderPane id="ground" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@Workbench.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <SplitPane style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
+         <items>
+            <SplitPane dividerPositions="0.7" orientation="VERTICAL" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;">
+               <items>
+                  <SplitPane dividerPositions="0.25" style="-fx-background-color: transparent;">
+                     <items>
+                        <TreeView id="package-explorer" prefHeight="200.0" prefWidth="200.0" />
+                        <VBox alignment="CENTER">
+                           <children>
+                              <Label text="No file open">
+                                 <font>
+                                    <Font size="25.0" />
+                                 </font>
+                              </Label>
+                              <Label text="You can open files using the explorer on the left" />
+                           </children>
+                        </VBox>
+                     </items>
+                  </SplitPane>
+                  <VBox>
+                     <children>
+                        <HBox id="terminal-bar" alignment="CENTER_RIGHT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0">
+                           <children>
+                              <HBox alignment="CENTER_LEFT" fillHeight="false" maxHeight="-Infinity" spacing="10.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <CheckBox id="sticky" contentDisplay="CENTER" mnemonicParsing="false" text="sticky" />
+                                    <ProgressBar id="state" maxHeight="-Infinity" prefHeight="20.0" prefWidth="100.0" progress="0.0" visible="false" HBox.hgrow="NEVER" />
+                                 </children>
+                              </HBox>
+                              <Button id="terminate" contentDisplay="GRAPHIC_ONLY" disable="true" mnemonicParsing="false" text="Button">
+                                 <graphic>
+                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="10.0" stroke="TRANSPARENT" strokeType="INSIDE" width="10.0" />
+                                 </graphic>
+                              </Button>
+                           </children>
+                           <padding>
+                              <Insets left="5.0" right="2.0" />
+                           </padding>
+                        </HBox>
+                        <ScrollPane fitToHeight="true" fitToWidth="true" VBox.vgrow="ALWAYS">
+                           <VBox.margin>
+                              <Insets left="2.0" top="2.0" />
+                           </VBox.margin>
+                           <content>
+                              <TextFlow id="terminal" style="-fx-background-color: transparent;" />
+                           </content>
+                        </ScrollPane>
+                     </children>
+                  </VBox>
+               </items>
+            </SplitPane>
+         </items>
+      </SplitPane>
+   </center>
+   <left>
+      <VBox id="sidebar" alignment="TOP_CENTER" prefWidth="50.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button id="create" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" text="Create">
+               <graphic>
+                  <ImageView fitHeight="35.0" fitWidth="35.0">
+                     <image>
+                        <Image url="@../assets/create.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button id="save" contentDisplay="GRAPHIC_ONLY" disable="true" layoutX="10.0" layoutY="60.0" mnemonicParsing="false" text="Run">
+               <graphic>
+                  <ImageView fitHeight="35.0" fitWidth="35.0">
+                     <image>
+                        <Image url="@../assets/save.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button id="run" contentDisplay="GRAPHIC_ONLY" layoutX="10.0" layoutY="15.0" mnemonicParsing="false" text="Save">
+               <graphic>
+                  <ImageView fitHeight="35.0" fitWidth="35.0">
+                     <image>
+                        <Image url="@../assets/run.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button id="settings" contentDisplay="GRAPHIC_ONLY" layoutX="10.0" layoutY="60.0" mnemonicParsing="false" text="Settings">
+               <graphic>
+                  <ImageView fitHeight="35.0" fitWidth="35.0">
+                     <image>
+                        <Image url="@../assets/settings.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <padding>
+            <Insets bottom="10.0" top="5.0" />
+         </padding>
+      </VBox>
+   </left>
+</BorderPane>

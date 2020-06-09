@@ -1,0 +1,20 @@
+#ground {
+	-fx-background-color: whitesmoke;
+}
+
+
+.text-field {
+	-fx-background-color: white;
+	-fx-background-radius: 20;
+	-fx-border-color: lightgrey;
+	-fx-border-radius: 20;
+	-fx-highlight-fill: whitesmoke;
+	-fx-highlight-text-fill: black;
+}
+
+.button {
+	-fx-background-color: white;
+	-fx-background-radius: 10;
+	-fx-border-color: lightgrey;
+	-fx-border-radius: 10;
+}

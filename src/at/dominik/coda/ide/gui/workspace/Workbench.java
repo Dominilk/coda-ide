@@ -174,10 +174,7 @@ public class Workbench {
 			
 			final TreeItem<FileRepresentation> treeItem = packageExplorer.getSelectionModel().getSelectedItem();
         	
-			if(treeItem != null && treeItem.getValue() != null) {
-				dialogue.setCurrentPath(treeItem.getValue().getFile().getPath());
-			}
-	        
+			dialogue.setCurrentPath(treeItem != null && treeItem.getValue() != null ? treeItem.getValue().getFile().getPath() : this.getProjectFolder().getPath() + "/");
 			dialogue.showAndWait();
 			
 			if(dialogue.getLatestCreation() != null) {
@@ -306,11 +303,13 @@ public class Workbench {
 	 * @return the {@link TreeItem} having the given file or null.
 	 */
 	private TreeItem<FileRepresentation> lookupTreeItem(TreeItem<FileRepresentation> parent, File file) {
-		for(TreeItem<FileRepresentation> child : parent.getChildren()) if(child.getValue().getFile().equals(file))return child;
+		if(parent.getValue().getFile().equals(file))return parent;
+		else for(TreeItem<FileRepresentation> child : parent.getChildren()) if(child.getValue().getFile().equals(file))return child;
 		else {
 			final TreeItem<FileRepresentation> result = this.lookupTreeItem(child, file);
 			if(result != null)return result;
 		}
+		
 		return null;
 	}
 	

@@ -72,8 +72,6 @@ public class WorkbenchTerminalTask {
 			
 			@Override
 			public void onExit() {
-				WorkbenchTerminalTask.this.getMessageQueue().add(new ProgramMessage(Color.web("#27ccb1"), "\nProcess exited."));
-				
 				WorkbenchTerminalTask.this.stop();
 			}
 			
@@ -88,6 +86,7 @@ public class WorkbenchTerminalTask {
 				else if(!WorkbenchTerminalTask.this.getProcess().isAlive()) {
 					this.work(WorkbenchTerminalTask.this.getMessageQueue().size());
 					WorkbenchTerminalTask.this.getTerminalUpdater().stop();
+					WorkbenchTerminalTask.this.getMessageQueue().add(new ProgramMessage(Color.web("#27ccb1"), "\nProcess exited."));
 				}
 			}
 			

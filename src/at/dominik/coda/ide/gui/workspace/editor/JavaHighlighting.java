@@ -18,7 +18,7 @@ import org.fxmisc.richtext.model.StyleSpansBuilder;
  * Created on 04.05.2020
  *
  */
-public class JavaHighlighting implements EditorHighlighting {
+public class JavaHighlighting implements SimpleHighlighting {
 
 	private static final String[] KEYWORDS = new String[] {
 			

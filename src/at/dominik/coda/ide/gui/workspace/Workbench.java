@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import org.fxmisc.flowless.VirtualizedScrollPane;
+
 import at.dominik.coda.CodaInteractor;
 import at.dominik.coda.ide.gui.dialogues.ErrorDialogue;
 import at.dominik.coda.ide.gui.dialogues.FileCreationDialogue;
@@ -192,6 +194,9 @@ public class Workbench {
 		 */
 		
 		this.getRun().setOnAction((actionEvent) -> {
+			
+			this.getSave().fire();
+			
 			final RunDialogue dialogue = new RunDialogue(this);
 			
 			final TreeItem<FileRepresentation> treeItem = packageExplorer.getSelectionModel().getSelectedItem();
@@ -325,7 +330,7 @@ public class Workbench {
 		}else{
 			final Double divider = this.getMainContent().getDividerPositions()[0];
 			this.getMainContent().getItems().remove(1);
-			this.getMainContent().getItems().add(this.getEditor());
+			this.getMainContent().getItems().add(new VirtualizedScrollPane<Editor>(this.getEditor()));
 			this.getMainContent().setDividerPosition(0, divider);
 		}
 

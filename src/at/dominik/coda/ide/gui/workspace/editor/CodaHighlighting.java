@@ -12,16 +12,13 @@ import java.util.regex.Pattern;
 import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
 
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-
 /**
  * @author Dominik Fluch
  *
  * Created on 04.05.2020
  *
  */
-public class CodaHighlighting implements EditorHighlighting {
+public class CodaHighlighting implements SimpleHighlighting {
 
 	private static final String[] KEYWORDS = new String[] {
 			
@@ -148,23 +145,6 @@ public class CodaHighlighting implements EditorHighlighting {
 	@Override
 	public String[] getSupportedFileTypes() {
 		return new String[] {"CODA"};
-	}
-	
-	@Override
-	public void onKeyPress(Editor editor, KeyEvent event) {
-		if(event.getCode() == KeyCode.DIGIT8 && event.isShiftDown()) {
-			editor.displaceCaret(editor.getCaretPosition() - 1);
-		}
-	}
-	
-	@Override
-	public void onKeyRelease(Editor editor, KeyEvent event) {
-		
-		if(event.getCode() == KeyCode.DIGIT8 && event.isShiftDown()) {
-			editor.insertText(editor.getCaretPosition(), ")");
-			editor.moveTo(editor.getCaretPosition() - 1);
-		}
-		
 	}
 	
 }

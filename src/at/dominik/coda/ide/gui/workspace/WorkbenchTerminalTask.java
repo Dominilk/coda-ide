@@ -16,7 +16,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 /**
@@ -72,7 +71,12 @@ public class WorkbenchTerminalTask {
 			
 			@Override
 			public void onExit() {
+				
+				// WorkbenchTerminalTask.this.getTerminalUpdater().getKeyFrames().get(0).getOnFinished().handle(null);
+				
 				WorkbenchTerminalTask.this.stop();
+				Platform.runLater(() -> workbench.getTerminal().getChildren().add(new ProgramMessage(Color.web("#27ccb1"), "\nProcess exited.").toText()));
+				
 			}
 			
 		};
@@ -86,7 +90,6 @@ public class WorkbenchTerminalTask {
 				else if(!WorkbenchTerminalTask.this.getProcess().isAlive()) {
 					this.work(WorkbenchTerminalTask.this.getMessageQueue().size());
 					WorkbenchTerminalTask.this.getTerminalUpdater().stop();
-					WorkbenchTerminalTask.this.getMessageQueue().add(new ProgramMessage(Color.web("#27ccb1"), "\nProcess exited."));
 				}
 			}
 			
@@ -97,12 +100,9 @@ public class WorkbenchTerminalTask {
 				for(int i = 0; i < amount && !WorkbenchTerminalTask.this.getMessageQueue().isEmpty(); i++) {
 					final ProgramMessage message = WorkbenchTerminalTask.this.getMessageQueue().poll();
 					
-					final Text text = new Text(message.getMessage() + "\n");
-					text.setFill(message.getColor());
-					
 					if(workbench.getTerminal().getChildren().size() > 500)workbench.getTerminal().getChildren().remove(0, 300);
 					
-					workbench.getTerminal().getChildren().add(workbench.getTerminal().getChildren().isEmpty() ? 0 : workbench.getTerminal().getChildren().size() - 1, text);
+					workbench.getTerminal().getChildren().add(workbench.getTerminal().getChildren().isEmpty() ? 0 : workbench.getTerminal().getChildren().size() - 1, message.toText());
 				}
 				
 				if(workbench.getStickyBox().isSelected()) {

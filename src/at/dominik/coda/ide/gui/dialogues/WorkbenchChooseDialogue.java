@@ -7,7 +7,7 @@ import java.io.File;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.stage.FileChooser;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Window;
 
 /**
@@ -54,9 +54,9 @@ public class WorkbenchChooseDialogue extends Dialogue {
 		
 		this.getBrowseButton().setOnAction((event) -> {
 			
-			final FileChooser chooser = new FileChooser();
+			final DirectoryChooser chooser = new DirectoryChooser();
 			
-			final File file = chooser.showOpenDialog(this);
+			final File file = chooser.showDialog(this);
 			
 			if(file != null)this.getWorkbenchPath().setText(file.getAbsolutePath());
 			

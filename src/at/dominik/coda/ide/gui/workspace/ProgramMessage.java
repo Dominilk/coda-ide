@@ -4,6 +4,7 @@
 package at.dominik.coda.ide.gui.workspace;
 
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 
 /**
  * @author Dominik Fluch
@@ -30,6 +31,15 @@ public class ProgramMessage {
 	 */
 	public ProgramMessage(String message) {
 		this(Color.BLACK, message);
+	}
+	
+	/**
+	 * @return the message converted to a javafx text.
+	 */
+	public Text toText() {
+		final Text text = new Text(this.getMessage() + "\n");
+		text.setFill(this.getColor());
+		return text;
 	}
 	
 	/**

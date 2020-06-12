@@ -33,7 +33,6 @@ public interface EditorHighlighting {
 	 */
 	public default void onKeyRelease(Editor editor, KeyEvent event) {}
 	
-	
 	/**
 	 * @return the Pattern of the highlighting.
 	 */

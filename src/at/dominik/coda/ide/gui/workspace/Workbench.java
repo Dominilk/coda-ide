@@ -16,6 +16,7 @@ import java.util.List;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 
 import at.dominik.coda.CodaInteractor;
+import at.dominik.coda.exceptions.InteractException;
 import at.dominik.coda.ide.gui.dialogues.ErrorDialogue;
 import at.dominik.coda.ide.gui.dialogues.FileCreationDialogue;
 import at.dominik.coda.ide.gui.dialogues.RunDialogue;
@@ -172,11 +173,11 @@ public class Workbench {
 		packageExplorer.setContextMenu(contextMenu);
 		
 		this.getFileCreate().setOnAction((actionEvent) -> {
-			final FileCreationDialogue dialogue = new FileCreationDialogue(this.getGround().getScene().getWindow());
+			final FileCreationDialogue dialogue = new FileCreationDialogue(this);
 			
 			final TreeItem<FileRepresentation> treeItem = packageExplorer.getSelectionModel().getSelectedItem();
         	
-			dialogue.setCurrentPath(treeItem != null && treeItem.getValue() != null ? treeItem.getValue().getFile().getPath() : this.getProjectFolder().getPath() + "/");
+			dialogue.setCurrentPath(treeItem != null && treeItem.getValue() != null ? this.getProjectFolder().toPath().relativize(treeItem.getValue().getFile().toPath()).toString() : "");
 			dialogue.showAndWait();
 			
 			if(dialogue.getLatestCreation() != null) {
@@ -282,8 +283,15 @@ public class Workbench {
 			this.getTerminal().getChildren().add(prompt);
 			
 			this.getTerminateButton().setDisable(false);
+		
+			try {
+				this.currentTask = new WorkbenchTerminalTask(this, this.getCoda().run(file));
+			}catch(InteractException exception) {
+				final ErrorDialogue dialogue = new ErrorDialogue(this.getGround().getScene().getWindow());
+				dialogue.setMessage(exception.getMessage());
+				dialogue.show();
+			}
 			
-			this.currentTask = new WorkbenchTerminalTask(this, this.getCoda().run(file));
 		}
 	}
 	

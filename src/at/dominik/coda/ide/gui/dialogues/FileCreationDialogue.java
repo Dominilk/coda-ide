@@ -6,9 +6,9 @@ package at.dominik.coda.ide.gui.dialogues;
 import java.io.File;
 import java.io.IOException;
 
+import at.dominik.coda.ide.gui.workspace.Workbench;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.stage.Window;
 
 /**
  * @author Dominik Fluch
@@ -21,18 +21,17 @@ public class FileCreationDialogue extends Dialogue {
 	private File latestCreation;
 	
 	/**
-	 * @param owner
+	 * @param workbench
 	 */
-	public FileCreationDialogue(Window owner) {
-		super(owner);
+	public FileCreationDialogue(Workbench workbench) {
+		super(workbench.getGround().getScene().getWindow());
 		this.setResizable(false);
 		
 		this.getCreateButton().setOnMousePressed((mouseEvent) -> {
 			
-			final File file = new File(this.getCurrentPath());
+			final File file = new File(workbench.getProjectFolder(), this.getCurrentPath());
 			
 			try {
-				
 				this.getCurrentPathField().setStyle("-fx-border-color: lightgrey;");
 				
 				if(file.getName().contains(".")) {

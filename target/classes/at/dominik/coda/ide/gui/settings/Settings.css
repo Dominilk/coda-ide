@@ -1,0 +1,164 @@
+* {
+	-base-color: whitesmoke;
+	-divider-color: #e0e0e0;
+	-shading: #999999;
+	-editor-color: whitesmoke;
+	-selected: #e3e3e3;
+}
+
+#ground {
+	-fx-background-color: -base-color;
+}
+
+#sidebar {
+	-fx-background-color: white;
+	-fx-effect: dropshadow(three-pass-box, -shading, 2, 0, 0, 0);
+}
+
+#workbench {
+	-fx-background-color: -editor-color;
+}
+
+#workbench .content {
+    -fx-background-color: -editor-color;
+}
+
+#package-explorer {
+	-fx-background-color: transparent;
+}
+
+#package-explorer .tree-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: black;
+}
+
+#package-explorer .tree-cell:selected {
+    -fx-background-color: -selected;
+}
+
+#package-explorer .tree-cell > .tree-disclosure-node > .arrow  {
+    -fx-background-color: black;
+}
+
+#terminal-bar {
+	-fx-background-color: #f7f7f7;
+	-fx-effect: dropshadow(three-pass-box, -shading, 2, 0, 0, 0);
+}
+
+.progress-bar {
+    -fx-accent: #27ccb1;
+}
+
+.progress-bar .track {
+    -fx-background-color: white;
+    -fx-effect: dropshadow(three-pass-box, -shading, 2, 0, 0, 0);
+}
+
+.menu-bar {
+	-fx-background-color: transparent;
+}
+
+.split-pane:horizontal > .split-pane-divider {
+   -fx-background-color: -divider-color;
+}
+
+.split-pane:vertical > .split-pane-divider {
+   -fx-background-color: -divider-color;
+}
+
+.button {
+	-fx-background-color: transparent;
+}
+
+.button:hover {
+	-fx-background-color: #f7f7f7;
+	-fx-cursor: hand;
+	-fx-text-fill: grey;
+	-fx-background-radius: 2 0 2 2;
+}
+
+.selected {
+	-fx-background-color: #f7f7f7;
+}
+
+/* Scrollbar related mess */
+
+.scroll-bar:horizontal, .scroll-bar:vertical{
+    -fx-background-color: transparent;
+}
+
+.scroll-pane > .corner, .scroll-bar:horizontal:hover .track ,
+.scroll-bar:horizontal:pressed .track ,
+.scroll-bar:vertical:hover .track,
+.scroll-bar:vertical:pressed .track{
+     -fx-background-color: transparent;
+}
+
+.scroll-bar .thumb {
+     -fx-background-color: -selected;
+}
+
+.scroll-bar .increment-arrow, .decrement-arrow{
+	-fx-background-color: transparent;
+}
+
+.scroll-bar .corner {
+	-fx-background-color: transparent;
+}
+
+.scroll-pane > .viewport {
+   -fx-background-color: transparent;
+}
+
+.scroll-pane {
+	-fx-background-color: transparent;
+}
+
+.context-menu {
+	-fx-background-color: rgba(255, 255, 255, 0.8);
+	-fx-background-radius: 2;
+}
+
+.menu-item:hover, .menu-item:focused {
+	-fx-text-fill: black;
+	-fx-background-color: #e6e6e6;
+}
+
+.menu-item .label {
+	-fx-text-fill: black;
+}
+
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-background-color: transparent;
+}
+
+.tab-pane {
+	-fx-padding: 0 -1 -1 -1
+}
+
+.tab-pane:focused > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
+	-fx-border-color: transparent;
+}
+
+.tab {
+	-fx-background-radius: 0;
+	-fx-border-radius: 0;
+	-fx-border-color: transparent;
+	-fx-background-color: white;
+}
+
+.check-box .box {
+	-fx-background-color: white;
+	-fx-border-color: lightgrey;
+	-fx-border-radius: 5px;
+	-fx-padding: 0.5px;
+}
+
+.check-box:selected .mark {
+	-fx-background-color: white;
+}
+
+.check-box:selected .box {
+	-fx-background-color: #27ccb1;
+	-fx-border-color: transparent;
+}

@@ -19,7 +19,19 @@
                   <Font name="System Bold" size="30.0" />
                </font>
             </Label>
-            <Button id="plugins" alignment="BASELINE_LEFT" graphicTextGap="8.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="216.0" styleClass="selected" text="Plugins" textAlignment="CENTER">
+            <Button id="plugins" alignment="BASELINE_LEFT" graphicTextGap="8.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="216.0" styleClass="selected" text="General" textAlignment="CENTER">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/general.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button id="plugins" alignment="BASELINE_LEFT" graphicTextGap="8.0" layoutX="20.0" layoutY="67.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="216.0" text="Plugins" textAlignment="CENTER">
                <font>
                   <Font size="20.0" />
                </font>

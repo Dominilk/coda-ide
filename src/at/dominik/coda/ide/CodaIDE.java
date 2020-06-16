@@ -3,6 +3,8 @@
  */
 package at.dominik.coda.ide;
 
+import java.io.File;
+
 import at.dominik.coda.ide.gui.dialogues.WorkbenchChooseDialogue;
 import at.dominik.coda.ide.gui.workspace.Workbench;
 import javafx.application.Application;
@@ -29,9 +31,16 @@ public class CodaIDE extends Application {
 	
 	@Override
 	public void start(Stage stage) throws Exception {
-		
 		final WorkbenchChooseDialogue dialogue = new WorkbenchChooseDialogue(stage);
-		dialogue.showAndWait();
+		
+		if(this.getParameters().getRaw().size() == 1) {
+			final File file = new File(this.getParameters().getRaw().get(0));
+			
+			if(file.exists())dialogue.setChosenWorkspace(file.isDirectory() ? file : file.getParentFile());
+		}
+		
+		
+		if(dialogue.getChosenWorkspace() == null)dialogue.showAndWait();
 		
 		final Stage loading = this.showLoadingScreen();
 		stage.setOnShown((windowEvent) -> loading.hide());

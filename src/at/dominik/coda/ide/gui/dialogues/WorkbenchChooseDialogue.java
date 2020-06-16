@@ -25,6 +25,7 @@ public class WorkbenchChooseDialogue extends Dialogue {
 	 */
 	public WorkbenchChooseDialogue(Window owner) {
 		super(owner);
+		this.setTitle("Choose a workspace");
 		this.setResizable(false);
 		
 		this.setOnCloseRequest((event) -> {
@@ -39,7 +40,7 @@ public class WorkbenchChooseDialogue extends Dialogue {
 			final File workspace = new File(this.getWorkbenchPath().getText());
 			
 			if(workspace.exists() && workspace.isDirectory()) {
-				this.chosenWorkspace = workspace;
+				this.setChosenWorkspace(workspace);
 				this.hide();
 			}else{
 				final ErrorDialogue dialogue = new ErrorDialogue(this);
@@ -89,6 +90,13 @@ public class WorkbenchChooseDialogue extends Dialogue {
 	 */
 	public File getChosenWorkspace() {
 		return chosenWorkspace;
+	}
+	
+	/**
+	 * @param chosenWorkspace the chosenWorkspace to set
+	 */
+	public void setChosenWorkspace(File chosenWorkspace) {
+		this.chosenWorkspace = chosenWorkspace;
 	}
 	
 }

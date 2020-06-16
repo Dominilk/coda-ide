@@ -64,7 +64,12 @@ public class CodaHighlighting implements SimpleHighlighting {
 			"as",
 			"while",
 			"load",
-			"var"
+			"var",
+			"null",
+			"nullptr",
+			"nothing",
+			"empty",
+			"try"
 			
 	};
 	

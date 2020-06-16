@@ -291,7 +291,6 @@ public class Workbench {
 				dialogue.setMessage(exception.getMessage());
 				dialogue.show();
 			}
-			
 		}
 	}
 	

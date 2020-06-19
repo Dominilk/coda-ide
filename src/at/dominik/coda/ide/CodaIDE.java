@@ -5,6 +5,7 @@ package at.dominik.coda.ide;
 
 import java.io.File;
 
+import at.dominik.coda.ide.exceptions.UnhandledException;
 import at.dominik.coda.ide.gui.dialogues.WorkbenchChooseDialogue;
 import at.dominik.coda.ide.gui.workspace.Workbench;
 import javafx.application.Application;
@@ -62,15 +63,14 @@ public class CodaIDE extends Application {
 			protected Workbench call() throws Exception {
 				try {
 					return new Workbench(dialogue.getChosenWorkspace());
-				}catch(Exception exception) {exception.printStackTrace();
-					return null;
-				}
+				}catch(Exception exception) {exception.printStackTrace();throw new UnhandledException(exception);}
 			}
 			
 		};
 		
 		task.setOnSucceeded((workerStateEvent) -> {
 			stage.setScene(task.getValue().createScene());
+			task.getValue().init();
 			stage.show();
 		});
 		

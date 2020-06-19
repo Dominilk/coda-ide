@@ -12,9 +12,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <VBox id="ground" prefHeight="100.0" prefWidth="500.0" spacing="10.0" stylesheets="@RunDialogue.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
+      <TextField id="args" prefHeight="29.0" prefWidth="250.0" promptText="arguments" />
       <Label text="Run single file">
          <font>
             <Font name="System Bold" size="15.0" />

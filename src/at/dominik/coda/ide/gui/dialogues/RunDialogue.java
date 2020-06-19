@@ -26,7 +26,8 @@ public class RunDialogue extends Dialogue {
 		this.getRunFileButton().setOnAction((event) -> {
 			
 			if(workbench.canRun()) {
-				workbench.runFile(new File(this.getFilePath()));
+				System.out.println(this.getArguments());
+				workbench.runFile(new File(this.getFilePath()), this.getArguments());
 				
 				this.close();
 			}else{
@@ -60,6 +61,20 @@ public class RunDialogue extends Dialogue {
 	 */
 	public String getFilePath() {
 		return this.getFilePathField().getText();
+	}
+	
+	/**
+	 * @return the arguments.
+	 */
+	public String getArguments() {
+		return this.getArgumentsField().getText();
+	}
+	
+	/**
+	 * @return the file path {@link TextField}.
+	 */
+	public TextField getArgumentsField() {
+		return (TextField) this.getScene().lookup("#args");
 	}
 	
 	/**

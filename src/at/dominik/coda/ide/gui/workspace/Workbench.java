@@ -20,6 +20,7 @@ import at.dominik.coda.exceptions.InteractException;
 import at.dominik.coda.ide.gui.dialogues.ErrorDialogue;
 import at.dominik.coda.ide.gui.dialogues.FileCreationDialogue;
 import at.dominik.coda.ide.gui.dialogues.RunDialogue;
+import at.dominik.coda.ide.gui.settings.SettingsWindow;
 import at.dominik.coda.ide.gui.workspace.editor.CodaHighlighting;
 import at.dominik.coda.ide.gui.workspace.editor.Editor;
 import at.dominik.coda.ide.gui.workspace.editor.EditorHighlighting;
@@ -59,7 +60,7 @@ public class Workbench {
 	private final List<EditorHighlighting> knownHighlightings;
 	private final Editor editor;
 	private final CodaInteractor coda;
-	private final WorkbenchSettings settings;
+	private SettingsWindow settings;
 	private File projectFolder;
 	protected WorkbenchTerminalTask currentTask;
 	
@@ -74,9 +75,7 @@ public class Workbench {
 		this.knownHighlightings = new ArrayList<EditorHighlighting>();
 		this.editor = new Editor();
 		this.currentTask = null;
-		this.settings = new WorkbenchSettings();
-		
-		this.getSettings().lastFile = new File(projectFolder, ".settings");
+		// this.getSettings().lastFile = new File(projectFolder, ".settings");
 		
 		this.setProjectFolder(projectFolder);
 		
@@ -210,13 +209,27 @@ public class Workbench {
 			dialogue.show();
 		});
 		
+		this.getSettingsButton().setOnAction((actionEvent) -> {
+			
+			if(!this.getSettings().isShowing())this.getSettings().show();
+			
+		});
+	}
+	
+	/**
+	 * Must be called in javafx thread -> initializes all javafx-thread dependent features.
+	 */
+	public void init() {
+		this.settings = new SettingsWindow(this);
 	}
 	
 	/**
 	 * Runs the file at the given path.
 	 * @param file
+	 * @param arguments
+	 * @param dependencies
 	 */
-	public void runFile(File file, File... dependencies) {
+	public void runFile(File file, String arguments, File... dependencies) {
 		
 		if(file.isDirectory()) {
 			final File exportedFiles = new File(this.getProjectFolder(), ".exported");
@@ -231,7 +244,7 @@ public class Workbench {
 			try {
 				target.createNewFile();
 				Files.move(exported.toPath(), target.toPath(), StandardCopyOption.REPLACE_EXISTING);
-				this.runFile(target);
+				this.runFile(target, arguments);
 			} catch (IOException exception) {
 				final ErrorDialogue dialogue = new ErrorDialogue(this.getGround().getScene().getWindow());
 				dialogue.setMessage(exception.getMessage());
@@ -285,7 +298,7 @@ public class Workbench {
 			this.getTerminateButton().setDisable(false);
 		
 			try {
-				this.currentTask = new WorkbenchTerminalTask(this, this.getCoda().run(file));
+				this.currentTask = new WorkbenchTerminalTask(this, this.getCoda().run(file, arguments));
 			}catch(InteractException exception) {
 				final ErrorDialogue dialogue = new ErrorDialogue(this.getGround().getScene().getWindow());
 				dialogue.setMessage(exception.getMessage());
@@ -448,6 +461,13 @@ public class Workbench {
 	}
 	
 	/**
+	 * @return the settings button.
+	 */
+	public Button getSettingsButton() {
+		return (Button) this.getGround().lookup("#settings");
+	}
+	
+	/**
 	 * @return the main content.
 	 */
 	public SplitPane getMainContent() {
@@ -532,7 +552,7 @@ public class Workbench {
 	/**
 	 * @return the settings
 	 */
-	public WorkbenchSettings getSettings() {
+	public SettingsWindow getSettings() {
 		return settings;
 	}
 	

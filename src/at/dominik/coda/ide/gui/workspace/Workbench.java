@@ -179,7 +179,15 @@ public class Workbench {
 			dialogue.showAndWait();
 			
 			if(dialogue.getLatestCreation() != null) {
-				final TreeItem<FileRepresentation> createdParent = this.lookupTreeItem(dialogue.getLatestCreation().getParentFile());
+				TreeItem<FileRepresentation> createdParent = null;
+				
+				File file = dialogue.getLatestCreation().getParentFile();
+				
+				while(createdParent == null && file.getAbsolutePath().startsWith(this.getProjectFolder().getAbsolutePath())) {
+					createdParent = this.lookupTreeItem(file);
+					
+					file = file.getParentFile();
+				}
 				
 				if(createdParent != null)this.update(createdParent);
 				
@@ -427,11 +435,7 @@ public class Workbench {
 	 */
 	private TreeItem<FileRepresentation> lookupTreeItem(TreeItem<FileRepresentation> parent, File file) {
 		if(parent.getValue().getFile().equals(file))return parent;
-		else for(TreeItem<FileRepresentation> child : parent.getChildren()) if(child.getValue().getFile().equals(file))return child;
-		else {
-			final TreeItem<FileRepresentation> result = this.lookupTreeItem(child, file);
-			if(result != null)return result;
-		}
+		else for(TreeItem<FileRepresentation> child : parent.getChildren())return this.lookupTreeItem(child, file);
 		
 		return null;
 	}

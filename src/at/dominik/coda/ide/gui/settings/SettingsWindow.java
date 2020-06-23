@@ -5,6 +5,8 @@ package at.dominik.coda.ide.gui.settings;
 
 import java.io.IOException;
 
+import org.controlsfx.control.ToggleSwitch;
+
 import at.dominik.coda.ide.gui.dialogues.ErrorDialogue;
 import at.dominik.coda.ide.gui.workspace.Workbench;
 import javafx.fxml.FXMLLoader;
@@ -60,6 +62,13 @@ public class SettingsWindow extends Stage {
 	 */
 	public Button getClose() {
 		return (Button) this.getScene().lookup("#close");
+	}
+	
+	/**
+	 * @return the stickyTerminal
+	 */
+	public boolean isTerminalSticky() {
+		return ((ToggleSwitch)this.getScene().lookup("#stickyTerm")).isSelected();
 	}
 	
 }

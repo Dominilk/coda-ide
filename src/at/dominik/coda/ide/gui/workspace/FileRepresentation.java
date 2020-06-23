@@ -11,9 +11,7 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileSystemView;
 
 import javafx.embed.swing.SwingFXUtils;
-import javafx.scene.control.TreeItem;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 /**
  * @author Dominik Fluch
@@ -26,8 +24,8 @@ public class FileRepresentation {
 	private static final JFileChooser FILE_CHOOSER = new JFileChooser();
 	private static final String OPERATING_SYSTEM = System.getProperty("os.name");
 	
-	private final File file;
 	private final Image icon;
+	private File file;
 	
 	/**
 	 * @param file
@@ -57,17 +55,6 @@ public class FileRepresentation {
 	}
 	
 	/**
-	 * @return a {@link TreeItem} for putting it into a TreeView.
-	 */
-	public TreeItem<FileRepresentation> createItem(){
-		final TreeItem<FileRepresentation> item = new TreeItem<FileRepresentation>(this);
-		
-		item.setGraphic(new ImageView(this.getIcon()));
-		
-		return item;
-	}
-	
-	/**
 	 * @return the icon
 	 */
 	public Image getIcon() {
@@ -79,6 +66,13 @@ public class FileRepresentation {
 	 */
 	public File getFile() {
 		return file;
+	}
+	
+	/**
+	 * @param file the file to set
+	 */
+	public void setFile(File file) {
+		this.file = file;
 	}
 	
 }

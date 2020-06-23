@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ColorPicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
@@ -11,6 +12,8 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import org.controlsfx.control.ToggleSwitch?>
 
 <BorderPane id="ground" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" stylesheets="@Settings.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <left>
@@ -73,7 +76,119 @@
                   </Button>
                </children>
             </HBox>
-            <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+            <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+               <content>
+                  <VBox spacing="10.0">
+                     <children>
+                        <Label text="Appearance">
+                           <font>
+                              <Font name="Poppins Medium" size="20.0" />
+                           </font>
+                        </Label>
+                        <HBox alignment="CENTER" minHeight="-Infinity" prefHeight="100.0" spacing="20.0" styleClass="setting">
+                           <children>
+                              <VBox alignment="CENTER_LEFT">
+                                 <children>
+                                    <Label text="Dark Mode">
+                                       <font>
+                                          <Font size="19.0" />
+                                       </font>
+                                    </Label>
+                                    <Text boundsType="LOGICAL_VERTICAL_CENTER" fill="GREY" strokeType="OUTSIDE" strokeWidth="0.0" text="Gives the UI a darker touch. Makes programming in the night easier.">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </Text>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </VBox>
+                              <ToggleSwitch id="darkMode" prefWidth="35.0" styleClass="toggle" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" layoutX="20.0" layoutY="163.0" minHeight="-Infinity" prefHeight="100.0" spacing="20.0" styleClass="setting">
+                           <children>
+                              <VBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="356.0">
+                                 <children>
+                                    <Label text="Main Color">
+                                       <font>
+                                          <Font size="19.0" />
+                                       </font>
+                                    </Label>
+                                    <Text boundsType="LOGICAL_VERTICAL_CENTER" fill="GREY" strokeType="OUTSIDE" strokeWidth="0.0" text="Defines the main color theme.">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </Text>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </VBox>
+                              <ColorPicker maxWidth="-Infinity" prefWidth="45.0" promptText="Choose main color" />
+                           </children>
+                        </HBox>
+                        <Label layoutX="20.0" layoutY="15.0" text="Utilities">
+                           <font>
+                              <Font name="Poppins Medium" size="20.0" />
+                           </font>
+                        </Label>
+                        <HBox alignment="CENTER" layoutX="20.0" layoutY="53.0" minHeight="-Infinity" prefHeight="100.0" spacing="20.0" styleClass="setting">
+                           <children>
+                              <VBox alignment="CENTER_LEFT" prefWidth="366.0">
+                                 <children>
+                                    <Label text="Sticky Terminal">
+                                       <font>
+                                          <Font size="19.0" />
+                                       </font>
+                                    </Label>
+                                    <Text boundsType="LOGICAL_VERTICAL_CENTER" fill="GREY" strokeType="OUTSIDE" strokeWidth="0.0" text="Makes the terminal scroll down automatically.">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </Text>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </VBox>
+                              <ToggleSwitch id="stickyTerm" prefWidth="35.0" styleClass="toggle" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="311.0" minHeight="-Infinity" prefHeight="100.0" spacing="20.0" styleClass="setting">
+                           <children>
+                              <VBox alignment="CENTER_LEFT" prefWidth="366.0">
+                                 <children>
+                                    <Label text="Information">
+                                       <font>
+                                          <Font size="19.0" />
+                                       </font>
+                                    </Label>
+                                    <Text boundsType="LOGICAL_VERTICAL_CENTER" fill="GREY" strokeType="OUTSIDE" strokeWidth="0.0" text="codaIDE by Dominik Fluch">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </Text>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                                 <padding>
+                                    <Insets left="10.0" />
+                                 </padding>
+                              </VBox>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets left="10.0" right="10.0" top="5.0" />
+                     </padding>
+                  </VBox>
+               </content></ScrollPane>
          </children>
       </VBox>
    </center>

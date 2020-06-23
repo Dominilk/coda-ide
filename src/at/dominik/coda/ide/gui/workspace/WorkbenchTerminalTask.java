@@ -105,7 +105,7 @@ public class WorkbenchTerminalTask {
 					workbench.getTerminal().getChildren().add(workbench.getTerminal().getChildren().isEmpty() ? 0 : workbench.getTerminal().getChildren().size() - 1, message.toText());
 				}
 				
-				if(workbench.getStickyBox().isSelected()) {
+				if(workbench.getSettings().isTerminalSticky()) {
 					final ScrollPane scrollPane = ((ScrollPane)workbench.getTerminal().getParent().getParent().getParent());
 					
 					scrollPane.setVvalue(scrollPane.getVmax());

@@ -1,9 +1,28 @@
+
 * {
+	/*
+	-front-color: black;
+	-base-color: #353535;
+	-divider-color: #303030;
+	-shading: transparent;
+	-editor-color: -base-color;
+	-selected: #212121;
+	-selected-light: #1c1c1c;
+	-text-fill: white;
+	*/
+	-front-color: white;
 	-base-color: whitesmoke;
 	-divider-color: #e0e0e0;
 	-shading: #999999;
-	-editor-color: whitesmoke;
+	-editor-color: -base-color;
 	-selected: #e3e3e3;
+	-selected-light: #f7f7f7;
+	-text-fill: black;
+	
+}
+
+.label {
+	-fx-text-fill: -text-fill;
 }
 
 #ground {
@@ -11,7 +30,7 @@
 }
 
 #sidebar {
-	-fx-background-color: white;
+	-fx-background-color: -front-color;
 	-fx-effect: dropshadow(three-pass-box, -shading, 2, 0, 0, 0);
 }
 
@@ -50,7 +69,7 @@
 }
 
 .progress-bar .track {
-    -fx-background-color: white;
+    -fx-background-color: -front-color;
     -fx-effect: dropshadow(three-pass-box, -shading, 2, 0, 0, 0);
 }
 
@@ -67,18 +86,28 @@
 }
 
 .button {
+	-fx-text-fill: -text-fill;
 	-fx-background-color: transparent;
+	-fx-background-radius: 2 0 2 2;
 }
 
 .button:hover {
 	-fx-background-color: #f7f7f7;
 	-fx-cursor: hand;
-	-fx-text-fill: grey;
-	-fx-background-radius: 2 0 2 2;
+}
+
+.setting {
+	-fx-background-color: -front-color;
+	-fx-background-radius: 5;
+	-fx-effect: dropshadow(three-pass-box, -shading, 2, 0, 0, 0);
+}
+
+.setting > .toggle:selected .thumb-area {
+    -fx-background-color: #27ccb1;
 }
 
 .selected {
-	-fx-background-color: #f7f7f7;
+	-fx-background-color: -selected-light;
 }
 
 /* Scrollbar related mess */
@@ -140,6 +169,10 @@
 	-fx-border-color: transparent;
 }
 
+.color-picker {
+	-fx-background-color: whitesmoke;	
+}
+
 .tab {
 	-fx-background-radius: 0;
 	-fx-border-radius: 0;
@@ -148,14 +181,14 @@
 }
 
 .check-box .box {
-	-fx-background-color: white;
+	-fx-background-color: -front-color;
 	-fx-border-color: lightgrey;
 	-fx-border-radius: 5px;
 	-fx-padding: 0.5px;
 }
 
 .check-box:selected .mark {
-	-fx-background-color: white;
+	-fx-background-color: -front-color;
 }
 
 .check-box:selected .box {

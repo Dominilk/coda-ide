@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
@@ -29,7 +30,6 @@ import at.dominik.coda.ide.gui.workspace.editor.StandardHighlighting;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressBar;
@@ -37,16 +37,23 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DataFormat;
+import javafx.scene.input.Dragboard;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.util.Callback;
 
 /**
  * @author Dominik Fluch
@@ -98,19 +105,11 @@ public class Workbench {
 		});
 		
 		
+		this.initializePackageExplorer();
+		
 		final TreeView<FileRepresentation> packageExplorer = this.getPackageExplorer();
 		
-		packageExplorer.setOnMouseClicked((mouseEvent) -> {
-			
-			if(mouseEvent.getClickCount() == 2) {
-				final TreeItem<FileRepresentation> treeItem = packageExplorer.getSelectionModel().getSelectedItem();
-		        	
-				if(treeItem == null || treeItem.getValue() == null || treeItem.getValue().getFile().isDirectory())return;
-		        
-				this.openFile(treeItem.getValue().getFile());
-			}
-		    
-		});
+		
 		
 		final ContextMenu contextMenu = new ContextMenu();
 		final MenuItem create = new MenuItem("Create file/folder");
@@ -213,6 +212,105 @@ public class Workbench {
 			
 			if(!this.getSettings().isShowing())this.getSettings().show();
 			
+		});
+	}
+	
+	/**
+	 * Initializes the package explorer.
+	 */
+	private void initializePackageExplorer() {
+		final TreeView<FileRepresentation> packageExplorer = this.getPackageExplorer();
+		packageExplorer.setOnMouseClicked((mouseEvent) -> {
+			
+			if(mouseEvent.getClickCount() == 2) {
+				final TreeItem<FileRepresentation> treeItem = packageExplorer.getSelectionModel().getSelectedItem();
+		        	
+				if(treeItem == null || treeItem.getValue() == null || treeItem.getValue().getFile().isDirectory())return;
+		        
+				this.openFile(treeItem.getValue().getFile());
+			}
+		    
+		});
+		
+		packageExplorer.setCellFactory(new Callback<TreeView<FileRepresentation>, TreeCell<FileRepresentation>>() {
+			
+			@Override
+			public TreeCell<FileRepresentation> call(TreeView<FileRepresentation> param) {
+				final TreeCell<FileRepresentation> cell = new TreeCell<FileRepresentation>() {
+				
+					@Override
+					protected void updateItem(FileRepresentation item, boolean empty) {
+						super.updateItem(item, empty);
+						if(empty) {
+							this.setText("");
+							this.setGraphic(null);
+						}else{
+							this.setText(item.getFile().getName());
+							this.setGraphic(new ImageView(item.getIcon()));
+							
+							this.setOnDragDetected((event) -> {
+								final Dragboard dragboard = this.startDragAndDrop(TransferMode.MOVE);
+								
+								ClipboardContent content = new ClipboardContent();
+								content.put(DataFormat.FILES, Arrays.asList(this.getTreeItem().getValue().getFile()));
+								
+								dragboard.setContent(content);
+								dragboard.setDragView(this.snapshot(null, null));
+								event.consume();
+								
+								param.getSelectionModel().select(this.getTreeItem());
+								
+							});
+							
+							this.setOnDragOver((event) -> {
+								final Dragboard dragboard = event.getDragboard();
+								final TreeItem<FileRepresentation> draggedItem = param.getSelectionModel().getSelectedItem();
+								
+								if(!dragboard.hasContent(DataFormat.FILES))return;
+								
+								if(draggedItem == null || this.getTreeItem() == draggedItem)return;
+								
+								event.acceptTransferModes(TransferMode.MOVE);
+							});
+							
+							this.setOnDragDropped((event) -> {
+								
+								final TreeItem<FileRepresentation> draggedItem = param.getSelectionModel().getSelectedItem();
+								final TreeItem<FileRepresentation> droppedItemParent = draggedItem.getParent();
+								
+								try {
+									final TreeItem<FileRepresentation> target = (this.getItem().getFile().isDirectory() ? this.getTreeItem() : this.getTreeItem().getParent());
+									final File move = draggedItem.getValue().getFile();
+									final File location = target.getValue().getFile();
+									
+									Workbench.move(move, location);
+									
+									draggedItem.getValue().setFile(new File(location, move.getName()));
+									droppedItemParent.getChildren().remove(draggedItem);
+								    target.getChildren().add(draggedItem);
+									
+								    Workbench.this.update(target);
+									Workbench.this.update(draggedItem);
+									
+								    param.getSelectionModel().select(draggedItem);
+									event.setDropCompleted(true);
+								} catch (IOException exception) {
+									exception.printStackTrace();
+									event.setDropCompleted(false);
+									final ErrorDialogue dialogue = new ErrorDialogue(Workbench.this.getGround().getScene().getWindow());
+									dialogue.setMessage("Failed to move file.");
+									dialogue.show();
+								}
+								
+							});
+						}
+					};
+					
+					
+				};
+				
+				return cell;
+			}
 		});
 	}
 	
@@ -410,7 +508,7 @@ public class Workbench {
 		
 		final FileRepresentation representation = new FileRepresentation(file);
 		
-		final TreeItem<FileRepresentation> element = representation.createItem();
+		final TreeItem<FileRepresentation> element = new TreeItem<FileRepresentation>(representation);
 		
 		item.getChildren().add(element);
 		
@@ -489,14 +587,6 @@ public class Workbench {
 	}
 	
 	/**
-	 * @return the sticky box.
-	 */
-	public CheckBox getStickyBox() {
-		return (CheckBox) ((HBox)((VBox)((SplitPane)((SplitPane)this.getGround().getCenter()).getItems().get(0)).getItems().get(1)).getChildren().get(0)).lookup("#sticky");
-	}
-	
-	
-	/**
 	 * @return the task state.
 	 */
 	public ProgressIndicator getTaskState() {
@@ -561,6 +651,35 @@ public class Workbench {
 	 */
 	public WorkbenchTerminalTask getCurrentTask() {
 		return currentTask;
+	}
+	
+	/**
+	 * Moves the given file to into the given target directory.
+	 * @param source
+	 * @param target
+	 * @throws IOException 
+	 */
+	private static void move(File source, File target) throws IOException {
+		assert source != null : "Source may not be null.";
+		assert target.isDirectory() : "Target has to be directory.";
+		
+		if(source.isDirectory()) {
+			
+			final File newDirectory = new File(target, source.getName());
+			newDirectory.mkdirs();
+			
+			for(File file : source.listFiles())Workbench.move(file, newDirectory);
+			
+
+			// In order to throw exception on error.
+			Files.delete(source.toPath());
+		}else{
+			final File newFile = new File(target, source.getName());
+			
+			Files.write(newFile.toPath(), Files.readAllBytes(source.toPath()));
+			
+			Files.delete(source.toPath());
+		}
 	}
 	
 }

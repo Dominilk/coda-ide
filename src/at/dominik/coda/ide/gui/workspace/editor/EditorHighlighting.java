@@ -5,10 +5,14 @@ package at.dominik.coda.ide.gui.workspace.editor;
 
 import java.net.URL;
 import java.util.Collection;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.fxmisc.richtext.model.StyleSpans;
 
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.scene.input.KeyEvent;
 
 /**
@@ -32,6 +36,13 @@ public interface EditorHighlighting {
 	 * @param event
 	 */
 	public default void onKeyRelease(Editor editor, KeyEvent event) {}
+	
+	/**
+	 * @return all the event handlers the highlighting needs.
+	 */
+	public default <T extends Event> Map<EventType<T>, EventHandler<T>> getEventHandlers() {
+		return null;
+	}
 	
 	/**
 	 * @return the Pattern of the highlighting.

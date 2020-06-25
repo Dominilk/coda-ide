@@ -3,7 +3,11 @@
  */
 package at.dominik.coda.ide.plugins;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import at.dominik.coda.ide.CodaIDE;
+import at.dominik.coda.ide.gui.workspace.editor.EditorHighlighting;
 import javafx.scene.image.Image;
 
 /**
@@ -14,7 +18,15 @@ import javafx.scene.image.Image;
  */
 public abstract class Plugin {
 
+	private final List<EditorHighlighting> editorHighlightings;
 	private PluginManager manager;
+	
+	/**
+	 * 
+	 */
+	public Plugin() {
+		this.editorHighlightings = new ArrayList<EditorHighlighting>();
+	}
 	
 	/**
 	 * @return the version of the {@link Plugin}.
@@ -51,9 +63,11 @@ public abstract class Plugin {
 	
 	/**
 	 * @param manager the manager to set
+	 * @return this
 	 */
-	protected void setManager(PluginManager manager) {
+	protected Plugin setManager(PluginManager manager) {
 		this.manager = manager;
+		return this;
 	}
 	
 	/**
@@ -61,6 +75,13 @@ public abstract class Plugin {
 	 */
 	public Image getIcon() {
 		return new Image(CodaIDE.class.getResourceAsStream("gui/assets/plugins.png"));
+	}
+	
+	/**
+	 * @return the editorHighlightings
+	 */
+	public List<EditorHighlighting> getEditorHighlightings() {
+		return editorHighlightings;
 	}
 	
 }

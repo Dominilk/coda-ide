@@ -8,6 +8,8 @@ import java.io.File;
 import at.dominik.coda.ide.exceptions.UnhandledException;
 import at.dominik.coda.ide.gui.dialogues.WorkbenchChooseDialogue;
 import at.dominik.coda.ide.gui.workspace.Workbench;
+import at.dominik.coda.ide.plugins.PluginManager;
+import at.dominik.coda.ide.settings.SettingsManager;
 import javafx.application.Application;
 import javafx.concurrent.Task;
 import javafx.geometry.Pos;
@@ -29,6 +31,20 @@ import javafx.stage.StageStyle;
  *
  */
 public class CodaIDE extends Application {
+	
+	private final File homeFolder;
+	private final SettingsManager settingsManager;
+	private final PluginManager pluginManager;
+	
+	/**
+	 * 
+	 */
+	public CodaIDE() {
+		this.homeFolder = new File(System.getProperty("os.name").toLowerCase().contains("win") ? "codaIDE" : System.getProperty("user.home") + "/.codaIDE");
+		
+		this.settingsManager = new SettingsManager(this);
+		this.pluginManager = new PluginManager(this);
+	}
 	
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -62,7 +78,7 @@ public class CodaIDE extends Application {
 			@Override
 			protected Workbench call() throws Exception {
 				try {
-					return new Workbench(dialogue.getChosenWorkspace());
+					return new Workbench(CodaIDE.this, dialogue.getChosenWorkspace());
 				}catch(Exception exception) {exception.printStackTrace();throw new UnhandledException(exception);}
 			}
 			
@@ -113,6 +129,27 @@ public class CodaIDE extends Application {
 		stage.show();
 		
 		return stage;
+	}
+	
+	/**
+	 * @return the homeFolder
+	 */
+	public File getHomeFolder() {
+		return homeFolder;
+	}
+	
+	/**
+	 * @return the settingsManager
+	 */
+	public SettingsManager getSettingsManager() {
+		return settingsManager;
+	}
+	
+	/**
+	 * @return the pluginManager
+	 */
+	public PluginManager getPluginManager() {
+		return pluginManager;
 	}
 	
 	/**

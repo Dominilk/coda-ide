@@ -1,7 +1,7 @@
 /**
  * 
  */
-package at.dominik.coda.ide.gui.workspace.editor;
+package at.dominik.coda.ide.plugins.standard;
 
 import java.net.URL;
 import java.util.Collection;
@@ -12,13 +12,15 @@ import java.util.regex.Pattern;
 import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
 
+import at.dominik.coda.ide.gui.workspace.editor.SimpleHighlighting;
+
 /**
  * @author Dominik Fluch
  *
  * Created on 04.05.2020
  *
  */
-public class CodaHighlighting implements SimpleHighlighting {
+public class JavaHighlighting implements SimpleHighlighting {
 
 	private static final String[] KEYWORDS = new String[] {
 			
@@ -31,13 +33,19 @@ public class CodaHighlighting implements SimpleHighlighting {
 			"catch",
 			"char",
 			"class",
+			"const",
 			"continue",
 			"default",
+			"do",
 			"double",
 			"else",
+			"enum",
 			"extends",
 			"final",
+			"finally",
+			"float",
 			"for",
+			"goto",
 			"if",
 			"implements",
 			"import",
@@ -52,30 +60,27 @@ public class CodaHighlighting implements SimpleHighlighting {
 			"protected",
 			"public",
 			"return",
-			"true",
-			"false",
+			"short",
 			"static",
+			"strictfp",
 			"super",
 			"switch",
+			"synchronized",
 			"this",
 			"throw",
-			"string",
+			"throws",
+			"transient",
 			"void",
-			"as",
+			"volatile",
 			"while",
-			"load",
-			"var",
-			"null",
-			"nullptr",
-			"nothing",
-			"empty",
-			"try"
+			"true",
+			"false"
 			
 	};
 	
 	private static final Pattern PATTERN = Pattern.compile(
 
-            "(?<KEYWORD>" + "\\b(" + String.join("|", CodaHighlighting.KEYWORDS) + ")\\b" + ")"
+            "(?<KEYWORD>" + "\\b(" + String.join("|", JavaHighlighting.KEYWORDS) + ")\\b" + ")"
 
             + "|(?<PARENT>\\(|\\))"
 
@@ -97,7 +102,7 @@ public class CodaHighlighting implements SimpleHighlighting {
 
 	@Override
 	public Pattern getPattern() {
-		return CodaHighlighting.PATTERN;
+		return JavaHighlighting.PATTERN;
 	}
 
 	@Override
@@ -129,6 +134,8 @@ public class CodaHighlighting implements SimpleHighlighting {
                     	
                     matcher.group("THIS") != null ? "this" :
                     	
+                    matcher.group("SELF") != null ? "self" :
+                            
                     null;
 			
 			spansBuilder.add(Collections.emptyList(), matcher.start() - lastKeywordEnd);
@@ -149,7 +156,8 @@ public class CodaHighlighting implements SimpleHighlighting {
 
 	@Override
 	public String[] getSupportedFileTypes() {
-		return new String[] {"CODA"};
+		return new String[] {"JAVA"};
 	}
+	
 	
 }

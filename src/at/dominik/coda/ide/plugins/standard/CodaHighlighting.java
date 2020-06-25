@@ -1,7 +1,7 @@
 /**
  * 
  */
-package at.dominik.coda.ide.gui.workspace.editor;
+package at.dominik.coda.ide.plugins.standard;
 
 import java.net.URL;
 import java.util.Collection;
@@ -12,13 +12,15 @@ import java.util.regex.Pattern;
 import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
 
+import at.dominik.coda.ide.gui.workspace.editor.SimpleHighlighting;
+
 /**
  * @author Dominik Fluch
  *
  * Created on 04.05.2020
  *
  */
-public class JavaHighlighting implements SimpleHighlighting {
+public class CodaHighlighting implements SimpleHighlighting {
 
 	private static final String[] KEYWORDS = new String[] {
 			
@@ -31,19 +33,13 @@ public class JavaHighlighting implements SimpleHighlighting {
 			"catch",
 			"char",
 			"class",
-			"const",
 			"continue",
 			"default",
-			"do",
 			"double",
 			"else",
-			"enum",
 			"extends",
 			"final",
-			"finally",
-			"float",
 			"for",
-			"goto",
 			"if",
 			"implements",
 			"import",
@@ -58,27 +54,30 @@ public class JavaHighlighting implements SimpleHighlighting {
 			"protected",
 			"public",
 			"return",
-			"short",
+			"true",
+			"false",
 			"static",
-			"strictfp",
 			"super",
 			"switch",
-			"synchronized",
 			"this",
 			"throw",
-			"throws",
-			"transient",
+			"string",
 			"void",
-			"volatile",
+			"as",
 			"while",
-			"true",
-			"false"
+			"load",
+			"var",
+			"null",
+			"nullptr",
+			"nothing",
+			"empty",
+			"try"
 			
 	};
 	
 	private static final Pattern PATTERN = Pattern.compile(
 
-            "(?<KEYWORD>" + "\\b(" + String.join("|", JavaHighlighting.KEYWORDS) + ")\\b" + ")"
+            "(?<KEYWORD>" + "\\b(" + String.join("|", CodaHighlighting.KEYWORDS) + ")\\b" + ")"
 
             + "|(?<PARENT>\\(|\\))"
 
@@ -97,10 +96,11 @@ public class JavaHighlighting implements SimpleHighlighting {
 			+ "|(?<THIS>\\b(" + String.join("|", "this" + ")\\b)")
 
     );
-
+	
+	
 	@Override
 	public Pattern getPattern() {
-		return JavaHighlighting.PATTERN;
+		return CodaHighlighting.PATTERN;
 	}
 
 	@Override
@@ -132,8 +132,6 @@ public class JavaHighlighting implements SimpleHighlighting {
                     	
                     matcher.group("THIS") != null ? "this" :
                     	
-                    matcher.group("SELF") != null ? "self" :
-                            
                     null;
 			
 			spansBuilder.add(Collections.emptyList(), matcher.start() - lastKeywordEnd);
@@ -154,8 +152,7 @@ public class JavaHighlighting implements SimpleHighlighting {
 
 	@Override
 	public String[] getSupportedFileTypes() {
-		return new String[] {"JAVA"};
+		return new String[] {"CODA"};
 	}
-	
 	
 }

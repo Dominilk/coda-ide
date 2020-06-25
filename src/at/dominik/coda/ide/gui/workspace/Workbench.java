@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -18,15 +17,13 @@ import org.fxmisc.flowless.VirtualizedScrollPane;
 
 import at.dominik.coda.CodaInteractor;
 import at.dominik.coda.exceptions.InteractException;
+import at.dominik.coda.ide.CodaIDE;
 import at.dominik.coda.ide.gui.dialogues.ErrorDialogue;
 import at.dominik.coda.ide.gui.dialogues.FileCreationDialogue;
 import at.dominik.coda.ide.gui.dialogues.RunDialogue;
 import at.dominik.coda.ide.gui.settings.SettingsWindow;
-import at.dominik.coda.ide.gui.workspace.editor.CodaHighlighting;
 import at.dominik.coda.ide.gui.workspace.editor.Editor;
 import at.dominik.coda.ide.gui.workspace.editor.EditorHighlighting;
-import at.dominik.coda.ide.gui.workspace.editor.JavaHighlighting;
-import at.dominik.coda.ide.gui.workspace.editor.StandardHighlighting;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -64,31 +61,28 @@ import javafx.util.Callback;
 public class Workbench {
 
 	private final BorderPane ground;
-	private final List<EditorHighlighting> knownHighlightings;
 	private final Editor editor;
 	private final CodaInteractor coda;
+	private final CodaIDE codaIDE;
 	private SettingsWindow settings;
 	private File projectFolder;
 	protected WorkbenchTerminalTask currentTask;
 	
 	
 	/**
+	 * @param codaIDE
 	 * @param projectFolder
 	 * @throws IOException 
 	 */
-	public Workbench(File projectFolder) throws IOException {
+	public Workbench(CodaIDE codaIDE, File projectFolder) throws IOException {
+		this.codaIDE = codaIDE;
 		this.coda = new CodaInteractor();
 		this.ground = FXMLLoader.load(this.getClass().getResource("Workbench.fxml"));
-		this.knownHighlightings = new ArrayList<EditorHighlighting>();
 		this.editor = new Editor();
 		this.currentTask = null;
 		// this.getSettings().lastFile = new File(projectFolder, ".settings");
 		
 		this.setProjectFolder(projectFolder);
-		
-		this.getKnownHighlightings().add(new StandardHighlighting());
-		this.getKnownHighlightings().add(new JavaHighlighting());
-		this.getKnownHighlightings().add(new CodaHighlighting());
 		
 		this.getMainContent().addEventFilter(KeyEvent.KEY_PRESSED, (keyEvent) -> {
 			
@@ -358,9 +352,6 @@ public class Workbench {
 			}
 			
 		}else{
-			this.getTaskState().setProgress(ProgressBar.INDETERMINATE_PROGRESS);
-			this.getTaskState().setVisible(true);
-			
 			this.getTerminal().getChildren().clear();
 			
 
@@ -400,11 +391,15 @@ public class Workbench {
 			
 			prompt.prefWidthProperty().bind(this.getTerminal().widthProperty().subtract(10D));
 			this.getTerminal().getChildren().add(prompt);
-			
-			this.getTerminateButton().setDisable(false);
 		
 			try {
 				this.currentTask = new WorkbenchTerminalTask(this, this.getCoda().run(file, arguments));
+				
+				if(this.getCurrentTask().getProcess().isAlive()) {
+					this.getTaskState().setProgress(ProgressBar.INDETERMINATE_PROGRESS);
+					this.getTaskState().setVisible(true);
+					this.getTerminateButton().setDisable(false);
+				}
 			}catch(InteractException exception) {
 				final ErrorDialogue dialogue = new ErrorDialogue(this.getGround().getScene().getWindow());
 				dialogue.setMessage(exception.getMessage());
@@ -623,19 +618,13 @@ public class Workbench {
 	 * @return the highlighting suitable for the given file type.
 	 */
 	public EditorHighlighting getHightlighting(String fileType) {
-		for(EditorHighlighting highlighting : this.getKnownHighlightings()) {
-			for(String type : highlighting.getSupportedFileTypes()) if(type.toUpperCase().equals(fileType.toUpperCase()))return highlighting;
-		}
-		return !this.getKnownHighlightings().isEmpty() ? this.getKnownHighlightings().get(0) : null;
+		final List<EditorHighlighting> knownHighlightings = this.getCodaIDE().getPluginManager().getPluginEditorHighlightings();
+		
+		for(EditorHighlighting highlighting : knownHighlightings) for(String type : highlighting.getSupportedFileTypes()) if(type.toUpperCase().equals(fileType.toUpperCase()))return highlighting;
+		
+		return !knownHighlightings.isEmpty() ? knownHighlightings.get(0) : null;
 	}
-	
-	/**
-	 * @return the knownHighlightings
-	 */
-	public List<EditorHighlighting> getKnownHighlightings() {
-		return knownHighlightings;
-	}
-	
+
 	/**
 	 * @return the coda
 	 */
@@ -655,6 +644,13 @@ public class Workbench {
 	 */
 	public WorkbenchTerminalTask getCurrentTask() {
 		return currentTask;
+	}
+	
+	/**
+	 * @return the codaIDE
+	 */
+	public CodaIDE getCodaIDE() {
+		return codaIDE;
 	}
 	
 	/**

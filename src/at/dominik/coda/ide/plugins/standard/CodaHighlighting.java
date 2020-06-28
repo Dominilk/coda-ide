@@ -12,7 +12,14 @@ import java.util.regex.Pattern;
 import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
 
+import at.dominik.coda.ide.gui.workspace.editor.Editor;
 import at.dominik.coda.ide.gui.workspace.editor.SimpleHighlighting;
+import javafx.geometry.Bounds;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.stage.Popup;
 
 /**
  * @author Dominik Fluch
@@ -97,12 +104,29 @@ public class CodaHighlighting implements SimpleHighlighting {
 
     );
 	
-	
 	@Override
 	public Pattern getPattern() {
 		return CodaHighlighting.PATTERN;
 	}
-
+	
+	@Override
+	public void onKeyPress(Editor editor, KeyEvent event) {
+		if(event.getCode() == KeyCode.SPACE && event.isControlDown()) {
+			Popup popup = new Popup();
+			final ListView<Object> view = new ListView<>();
+			
+			final Label l = new Label("Test");
+			
+			view.getItems().add(l);
+			view.getItems().add(new Label("Lolol"));
+			
+			popup.getContent().add(view);
+			Bounds pointer = editor.caretBoundsProperty().getValue().get();
+			popup.show(editor.getScene().getWindow(), pointer.getMaxX(), pointer.getMinY());
+		}
+		
+	}
+	
 	@Override
 	public StyleSpans<Collection<String>> compute(String text) {
 		final Matcher matcher = PATTERN.matcher(text);

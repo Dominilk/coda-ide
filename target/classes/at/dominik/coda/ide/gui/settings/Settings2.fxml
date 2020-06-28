@@ -85,7 +85,7 @@
                               <Font name="Poppins Medium" size="20.0" />
                            </font>
                         </Label>
-                        <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="53.0" minHeight="-Infinity" prefHeight="100.0" styleClass="setting">
+                        <HBox alignment="CENTER" minHeight="-Infinity" prefHeight="100.0" spacing="20.0" styleClass="setting">
                            <children>
                               <VBox alignment="CENTER_LEFT">
                                  <children>
@@ -94,84 +94,94 @@
                                           <Font size="19.0" />
                                        </font>
                                     </Label>
-                                    <Text boundsType="LOGICAL_VERTICAL_CENTER" fill="GREY" strokeType="OUTSIDE" strokeWidth="0.0" text="Defines the main color theme." />
+                                    <Text boundsType="LOGICAL_VERTICAL_CENTER" fill="GREY" strokeType="OUTSIDE" strokeWidth="0.0" text="Gives the UI a darker touch. Makes programming in the night easier.">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </Text>
                                  </children>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
                               </VBox>
-                              <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
-                                 <children>
-                                    <ToggleSwitch id="stickyTerm" prefWidth="35.0" styleClass="toggle" />
-                                 </children>
-                              </HBox>
+                              <ToggleSwitch id="darkMode" prefWidth="35.0" styleClass="toggle" />
                            </children>
-                           <padding>
-                              <Insets left="10.0" right="10.0" />
-                           </padding>
                         </HBox>
-                        <HBox alignment="CENTER_LEFT" minHeight="-Infinity" prefHeight="100.0" styleClass="setting">
+                        <HBox alignment="CENTER" layoutX="20.0" layoutY="163.0" minHeight="-Infinity" prefHeight="100.0" spacing="20.0" styleClass="setting">
                            <children>
-                              <VBox alignment="CENTER_LEFT">
+                              <VBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="356.0">
                                  <children>
                                     <Label text="Main Color">
                                        <font>
                                           <Font size="19.0" />
                                        </font>
                                     </Label>
-                                    <Text boundsType="LOGICAL_VERTICAL_CENTER" fill="GREY" strokeType="OUTSIDE" strokeWidth="0.0" text="Defines the main color theme." />
+                                    <Text boundsType="LOGICAL_VERTICAL_CENTER" fill="GREY" strokeType="OUTSIDE" strokeWidth="0.0" text="Defines the main color theme.">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </Text>
                                  </children>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
                               </VBox>
-                              <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS" />
                               <ColorPicker maxWidth="-Infinity" prefWidth="45.0" promptText="Choose main color" />
                            </children>
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                           <padding>
-                              <Insets left="10.0" right="10.0" />
-                           </padding>
                         </HBox>
                         <Label layoutX="20.0" layoutY="15.0" text="Utilities">
                            <font>
                               <Font name="Poppins Medium" size="20.0" />
                            </font>
                         </Label>
-                        <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="53.0" minHeight="-Infinity" prefHeight="100.0" styleClass="setting">
+                        <HBox alignment="CENTER" layoutX="20.0" layoutY="53.0" minHeight="-Infinity" prefHeight="100.0" spacing="20.0" styleClass="setting">
                            <children>
-                              <VBox alignment="CENTER_LEFT">
+                              <VBox alignment="CENTER_LEFT" prefWidth="366.0">
                                  <children>
                                     <Label text="Sticky Terminal">
                                        <font>
                                           <Font size="19.0" />
                                        </font>
                                     </Label>
-                                    <Text boundsType="LOGICAL_VERTICAL_CENTER" fill="GREY" strokeType="OUTSIDE" strokeWidth="0.0" text="Makes the terminal scroll down automatically." />
+                                    <Text boundsType="LOGICAL_VERTICAL_CENTER" fill="GREY" strokeType="OUTSIDE" strokeWidth="0.0" text="Makes the terminal scroll down automatically.">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </Text>
                                  </children>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
                               </VBox>
-                              <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
-                                 <children>
-                                    <ToggleSwitch id="stickyTerm" prefWidth="35.0" styleClass="toggle" />
-                                 </children>
-                              </HBox>
+                              <ToggleSwitch id="stickyTerm" prefWidth="35.0" styleClass="toggle" />
                            </children>
-                           <padding>
-                              <Insets left="10.0" right="10.0" />
-                           </padding>
                         </HBox>
-                        <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="311.0" minHeight="-Infinity" prefHeight="100.0" styleClass="setting">
+                        <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="311.0" minHeight="-Infinity" prefHeight="100.0" spacing="20.0" styleClass="setting">
                            <children>
-                              <VBox alignment="CENTER_LEFT">
+                              <VBox alignment="CENTER_LEFT" prefWidth="366.0">
                                  <children>
                                     <Label text="Information">
                                        <font>
                                           <Font size="19.0" />
                                        </font>
                                     </Label>
-                                    <Text boundsType="LOGICAL_VERTICAL_CENTER" fill="GREY" strokeType="OUTSIDE" strokeWidth="0.0" text="codaIDE is developed by Dominik Fluch." />
+                                    <Text boundsType="LOGICAL_VERTICAL_CENTER" fill="GREY" strokeType="OUTSIDE" strokeWidth="0.0" text="codaIDE by Dominik Fluch">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </Text>
                                  </children>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                                 <padding>
+                                    <Insets left="10.0" />
+                                 </padding>
                               </VBox>
                            </children>
-                           <padding>
-                              <Insets left="10.0" right="10.0" />
-                           </padding>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
                         </HBox>
                      </children>
                      <padding>

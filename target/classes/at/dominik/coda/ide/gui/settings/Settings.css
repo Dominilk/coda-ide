@@ -102,12 +102,24 @@
 	-fx-effect: dropshadow(three-pass-box, -shading, 2, 0, 0, 0);
 }
 
-.setting > .toggle:selected .thumb-area {
+.setting .toggle:selected .thumb-area {
     -fx-background-color: #27ccb1;
+}
+
+.setting > .toggle {
+	-fx-background-color: white;
 }
 
 .selected {
 	-fx-background-color: -selected-light;
+}
+
+.setting .button {
+	-fx-background-color: -base-color;
+}
+
+.color-picker {
+	-fx-background-color: -base-color;	
 }
 
 /* Scrollbar related mess */
@@ -167,10 +179,6 @@
 
 .tab-pane:focused > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
 	-fx-border-color: transparent;
-}
-
-.color-picker {
-	-fx-background-color: whitesmoke;	
 }
 
 .tab {

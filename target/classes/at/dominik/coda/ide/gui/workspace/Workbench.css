@@ -92,7 +92,7 @@
      -fx-background-color: -selected;
 }
 
-.scroll-bar .increment-arrow, .decrement-arrow{
+.scroll-bar .increment-arrow, .decrement-arrow, .increment-button, .decrement-button {
 	-fx-background-color: transparent;
 }
 

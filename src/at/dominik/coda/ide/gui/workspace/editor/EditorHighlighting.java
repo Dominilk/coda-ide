@@ -45,6 +45,12 @@ public interface EditorHighlighting {
 	}
 	
 	/**
+	 * Gets called when the highlighting is applied to the given editor.
+	 * @param editor
+	 */
+	public default void initialize(Editor editor) {}
+	
+	/**
 	 * @return the Pattern of the highlighting.
 	 */
 	public Pattern getPattern();

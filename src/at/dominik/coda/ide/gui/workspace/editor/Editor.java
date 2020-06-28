@@ -3,10 +3,15 @@
  */
 package at.dominik.coda.ide.gui.workspace.editor;
 
+import java.util.Map;
+
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 
 import javafx.beans.value.ObservableValue;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 
 /**
  * @author Dominik Fluch
@@ -39,6 +44,7 @@ public class Editor extends CodeArea {
 			if(Editor.this.getHighlighting() != null)Editor.this.getHighlighting().onKeyRelease(Editor.this, event);
 			
 		});
+		
 	}
 	
 	/**
@@ -70,8 +76,21 @@ public class Editor extends CodeArea {
 	 */
 	public void setHighlighting(EditorHighlighting highlighting) {
 		
-		if(this.getHighlighting() != null)this.getStylesheets().remove(this.getHighlighting().getStylesheet().toExternalForm());
+		if(this.getHighlighting() != null) {
+			this.getStylesheets().remove(this.getHighlighting().getStylesheet().toExternalForm());
+			
+			final Map<EventType<Event>, EventHandler<Event>> handlers = this.getHighlighting().getEventHandlers();
+			
+			if(handlers != null) for(EventType<Event> type : handlers.keySet()) {
+				this.removeEventHandler(type, handlers.get(type));
+			}
+		}
 		
+		final Map<EventType<Event>, EventHandler<Event>> handlers = highlighting.getEventHandlers();
+		
+		if(handlers != null) for(EventType<Event> type : handlers.keySet())this.addEventHandler(type, handlers.get(type));
+		
+		highlighting.initialize(this);
 		this.highlighting = highlighting;
 		
 		this.getStylesheets().add(highlighting.getStylesheet().toExternalForm());

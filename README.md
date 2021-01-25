@@ -1,5 +1,6 @@
 ![preview](https://github.com/Dominilk/coda-ide/raw/master/imgs/preview.png "Preview")
 # codaIDE
+**NOTE: THIS IS THE OLD VERSION OF THE IDE. A NEW ONE IS ALREADY BEING WORKED ON**
 This is the IDE for my own programming language.
 My programming language has been in the works now for about 3 moths and I figured that
 making an IDE would be a good decision. Right now codaIDE has syntax highlighting support for 
